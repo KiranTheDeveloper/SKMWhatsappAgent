@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKM Financial — Dashboard</title>
+  <link rel="stylesheet" href="/dashboard/static/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <span class="header-logo">💬</span>
+      <div>
+        <h1>SKM Financial Services</h1>
+        <span class="header-sub">Agent Dashboard</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="connectionStatus" class="status-dot offline"></span>
+      <span id="connectionLabel">Connecting...</span>
+      <a href="/dashboard/logout" class="logout-btn">Logout</a>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- Left panel: conversation list -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Conversations</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="human">Needs Agent</button>
+          <button class="filter-tab" data-filter="bot">Bot Active</button>
+          <button class="filter-tab" data-filter="completed">Completed</button>
+        </div>
+      </div>
+      <div id="conversationList" class="conversation-list">
+        <div class="loading">Loading conversations...</div>
+      </div>
+    </aside>
+
+    <!-- Right panel: chat view -->
+    <main class="chat-area">
+      <div id="noChatSelected" class="no-chat">
+        <div class="no-chat-icon">💬</div>
+        <p>Select a conversation to view</p>
+      </div>
+
+      <div id="chatPanel" class="chat-panel" style="display:none;">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <h3 id="chatCustomerName">Customer</h3>
+            <div id="chatMeta" class="chat-meta"></div>
+          </div>
+          <div class="chat-header-actions">
+            <span id="modeLabel" class="mode-label"></span>
+            <button id="takeoverBtn" class="btn-takeover" onclick="takeOver()">Take Over</button>
+            <button id="handbackBtn" class="btn-handback" onclick="handBack()" style="display:none;">Hand Back to Bot</button>
+            <a id="driveFolderLink" href="#" target="_blank" class="btn-drive" style="display:none;">Open Drive Folder</a>
+          </div>
+        </div>
+
+        <div id="messagesArea" class="messages-area"></div>
+
+        <div class="docs-area">
+          <div class="docs-header">Documents Received</div>
+          <div id="docsList" class="docs-list"></div>
+        </div>
+
+        <div id="humanInputArea" class="human-input" style="display:none;">
+          <textarea id="messageInput" placeholder="Type a message as human agent..." rows="2" onkeydown="handleInputKeydown(event)"></textarea>
+          <button onclick="sendAgentMessage()" class="btn-send">Send</button>
+        </div>
+        <div id="botModeNote" class="bot-mode-note">Bot is handling this conversation. Click "Take Over" to send messages.</div>
+      </div>
+    </main>
+  </div>
+
+  <div id="notification" class="notification" style="display:none;"></div>
+
+  <script src="/dashboard/static/app.js"></script>
+</body>
+</html>
